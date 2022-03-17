@@ -28,4 +28,10 @@ public class Rating {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "emotion_id", nullable = false)
     private Emotion emotion;
+
+    public Rating (Emotion emotion) {
+        this.createdAt = LocalDateTime.now();
+        this.emotion = emotion;
+    }
+
 }
