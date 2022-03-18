@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class SettingValidationHandler extends ResponseEntityExceptionHandler {
+public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         Map<String, String> errors = new HashMap<>();
@@ -22,8 +22,6 @@ public class SettingValidationHandler extends ResponseEntityExceptionHandler {
             String message = error.getDefaultMessage();
             errors.put(filedName, message);
         });
-
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-
     }
 }
