@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class RatingService {
     }
 
     public List<Rating> getRatingByCreatedAtBetween(LocalDateTime fromDate, LocalDateTime toDate) {
+
+        if (fromDate.isAfter(toDate)) {
+            throw new DateTimeException("Bad request");
+        }
+
         return ratingRepository.getRatingByCreatedAtBetween(fromDate, toDate);
     }
 
