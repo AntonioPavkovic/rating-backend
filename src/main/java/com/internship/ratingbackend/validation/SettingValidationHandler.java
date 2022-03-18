@@ -23,7 +23,7 @@ public class SettingValidationHandler extends ResponseEntityExceptionHandler {
             errors.put(filedName, message);
         });
 
-        return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 
     }
 }
