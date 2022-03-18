@@ -3,11 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mariadb:3306
--- Generation Time: Mar 10, 2022 at 01:19 PM
+-- Generation Time: Mar 18, 2022 at 07:24 AM
 -- Server version: 10.6.7-MariaDB-1:10.6.7+maria~focal
 -- PHP Version: 8.0.15
-CREATE DATABASE rating_app;
-use rating_app;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -79,6 +77,30 @@ INSERT INTO `emotion_setting` (`id`, `emotion_id`, `emotion_value`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hibernate_sequence`
+--
+
+CREATE TABLE `hibernate_sequence` (
+                                      `next_not_cached_value` bigint(21) NOT NULL,
+                                      `minimum_value` bigint(21) NOT NULL,
+                                      `maximum_value` bigint(21) NOT NULL,
+                                      `start_value` bigint(21) NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
+                                      `increment` bigint(21) NOT NULL COMMENT 'increment value',
+                                      `cache_size` bigint(21) UNSIGNED NOT NULL,
+                                      `cycle_option` tinyint(1) UNSIGNED NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
+                                      `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
+) ENGINE=InnoDB;
+
+--
+-- Dumping data for table `hibernate_sequence`
+--
+
+INSERT INTO `hibernate_sequence` (`next_not_cached_value`, `minimum_value`, `maximum_value`, `start_value`, `increment`, `cache_size`, `cycle_option`, `cycle_count`) VALUES
+    (1001, 1, 9223372036854775806, 1, 1, 1000, 0, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rating`
 --
 
@@ -104,7 +126,25 @@ INSERT INTO `rating` (`id`, `created_at`, `emotion_id`) VALUES
                                                             (9, '2022-03-07 13:34:46', 2),
                                                             (10, '2022-03-07 13:34:46', 3),
                                                             (11, '2022-03-07 13:34:46', 4),
-                                                            (12, '2022-03-07 13:34:46', 5);
+                                                            (12, '2022-03-07 13:34:46', 5),
+                                                            (13, '2022-03-17 13:33:32', 1),
+                                                            (14, '2022-03-07 13:33:59', 5),
+                                                            (15, '2022-02-25 10:34:46', 4),
+                                                            (16, '2022-03-17 14:08:26', 4),
+                                                            (17, '2022-03-17 14:08:48', 4),
+                                                            (18, '2022-03-17 14:08:52', 4),
+                                                            (19, '2022-03-17 14:08:55', 4),
+                                                            (20, '2022-03-17 14:08:57', 4),
+                                                            (21, '2022-03-17 14:08:59', 4),
+                                                            (22, '2022-03-17 14:09:00', 4),
+                                                            (23, '2022-03-17 14:09:00', 4),
+                                                            (24, '2022-03-17 14:09:01', 4),
+                                                            (25, '2022-03-17 14:09:01', 4),
+                                                            (26, '2022-03-17 14:09:02', 4),
+                                                            (27, '2022-03-17 14:09:03', 4),
+                                                            (28, '2022-03-17 14:09:04', 4),
+                                                            (29, '2022-03-17 14:09:04', 4),
+                                                            (30, '2022-03-17 14:09:05', 4);
 
 -- --------------------------------------------------------
 
@@ -161,14 +201,14 @@ ALTER TABLE `emotion`
 --
 ALTER TABLE `emotion_setting`
     ADD PRIMARY KEY (`id`),
-    ADD KEY `emotion_id` (`emotion_id`);
+  ADD KEY `emotion_id` (`emotion_id`);
 
 --
 -- Indexes for table `rating`
 --
 ALTER TABLE `rating`
     ADD PRIMARY KEY (`id`),
-    ADD KEY `emotion_id` (`emotion_id`);
+  ADD KEY `emotion_id` (`emotion_id`);
 
 --
 -- Indexes for table `setting`
@@ -202,7 +242,7 @@ ALTER TABLE `emotion_setting`
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `setting`

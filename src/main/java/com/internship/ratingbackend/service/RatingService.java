@@ -4,6 +4,7 @@ import com.internship.ratingbackend.model.Rating;
 import com.internship.ratingbackend.repository.RatingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +19,7 @@ public class RatingService {
         return ratingRepository.findAll();
     }
 
-    public List<Rating> getRatingByCreatedAtBetween() {
-        LocalDateTime fromDate = LocalDateTime.parse("2022-03-07T13:34:18");
-        LocalDateTime toDate = LocalDateTime.parse("2022-03-07T13:34:46");
+    public List<Rating> getRatingByCreatedAtBetween(LocalDateTime fromDate, LocalDateTime toDate) {
         return ratingRepository.getRatingByCreatedAtBetween(fromDate, toDate);
     }
 
