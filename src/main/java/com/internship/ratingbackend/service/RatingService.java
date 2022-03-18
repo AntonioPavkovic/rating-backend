@@ -19,7 +19,7 @@ public class RatingService {
         return ratingRepository.findAll();
     }
 
-    public List<Rating> getRatingByCreatedAtBetween(@RequestParam(name = "created_at") LocalDateTime fromDate, @RequestParam LocalDateTime toDate) {
+    public List<Rating> getRatingByCreatedAtBetween(LocalDateTime fromDate, LocalDateTime toDate) {
         return ratingRepository.getRatingByCreatedAtBetween(fromDate, toDate);
     }
 

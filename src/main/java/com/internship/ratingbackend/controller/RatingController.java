@@ -27,8 +27,8 @@ public class RatingController {
 
     // method/route that gets ratings between two dates
     @GetMapping("")
-    public List<Rating> getRatingByCreatedAtBetween (@RequestParam(name = "created_at") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate,
-                                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate) {
+    public List<Rating> getRatingByCreatedAtBetween (@RequestParam(name = "fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
+                                                     @RequestParam(name = "toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate) {
 
         return ratingService.getRatingByCreatedAtBetween(fromDate, toDate);
 
