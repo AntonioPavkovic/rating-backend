@@ -20,13 +20,13 @@ public class RatingController {
 
     private final RatingService ratingService;
 
-    @GetMapping()
+    @GetMapping("/all")
     public List<Rating> getRating() {
         return ratingService.getRating();
     }
 
     // method/route that gets ratings between two dates
-    @GetMapping("/between")
+    @GetMapping("")
     public List<Rating> getRatingByCreatedAtBetween (@RequestParam(name = "created_at") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate,
                                                      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate) {
 
@@ -34,15 +34,10 @@ public class RatingController {
 
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping()
     public ResponseEntity<Rating> createRating(@RequestBody Rating newRating) {
 
         Rating rating = ratingService.save(newRating);
-
-        if (rating == null) {
-            System.out.println("Error");
-        }
 
         return new ResponseEntity<>(rating, HttpStatus.CREATED);
     }
