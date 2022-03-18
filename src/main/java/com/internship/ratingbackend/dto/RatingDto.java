@@ -1,16 +1,16 @@
 package com.internship.ratingbackend.dto;
 
+import com.internship.ratingbackend.model.Emotion;
+import com.internship.ratingbackend.validation.EmotionExistValidator;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 public class RatingDto {
 
-    private LocalDateTime createdAt;
-
-    private Integer emotionId;
+    @EmotionExistValidator
+    private Emotion emotion;
 
 }
