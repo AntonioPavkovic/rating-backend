@@ -4,8 +4,8 @@ import com.internship.ratingbackend.model.Rating;
 import com.internship.ratingbackend.repository.RatingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +20,14 @@ public class RatingService {
     }
 
     public List<Rating> getRatingByCreatedAtBetween(LocalDateTime fromDate, LocalDateTime toDate) {
+
+        Duration duration = Duration.between(fromDate, toDate);
+
+        if ((fromDate.isAfter(toDate) || duration.toDays() > 30))
+            throw new IllegalArgumentException("Date range is not valid");
+
         return ratingRepository.getRatingByCreatedAtBetween(fromDate, toDate);
+
     }
 
     public Rating save(Rating newRating) {
