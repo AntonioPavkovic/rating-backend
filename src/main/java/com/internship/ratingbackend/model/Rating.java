@@ -25,13 +25,13 @@ public class Rating {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne()
     @JoinColumn(name = "emotion_id", nullable = false)
     private Emotion emotion;
 
     public Rating (Emotion emotion) {
         this.createdAt = LocalDateTime.now();
-        this.emotion = emotion;
+        this.emotion=emotion;
     }
 
 }
