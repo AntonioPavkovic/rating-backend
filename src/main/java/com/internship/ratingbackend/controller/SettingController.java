@@ -1,11 +1,13 @@
 package com.internship.ratingbackend.controller;
 
+import com.internship.ratingbackend.command.UpdateSettingCommand;
 import com.internship.ratingbackend.dto.SettingDto;
 import com.internship.ratingbackend.model.Setting;
 import com.internship.ratingbackend.service.EmotionSettingService;
 import com.internship.ratingbackend.service.SettingService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,8 +27,9 @@ public class SettingController {
     }
 
     @PatchMapping()
-    public void updateSetting(@Valid @RequestBody SettingDto settingDto) {
-        Setting request = modelMapper.map(settingDto, Setting.class);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateSetting(@Valid @RequestBody UpdateSettingCommand updateSettingCommand) {
+        Setting request = modelMapper.map(updateSettingCommand, Setting.class);
         settingService.updateSetting(request);
     }
 }

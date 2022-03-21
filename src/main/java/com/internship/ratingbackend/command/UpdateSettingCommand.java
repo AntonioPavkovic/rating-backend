@@ -1,0 +1,30 @@
+package com.internship.ratingbackend.command;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+@Getter
+@AllArgsConstructor
+public class UpdateSettingCommand {
+    @Min(value = 3, message = "Minimum value for emotions number is 3")
+    @Max(value = 5, message = "Maximum value for emotions number is 5")
+    @NotNull
+    private Integer emotionNumber;
+
+    @Length(min = 3, message = "Minimum characters for message is 3")
+    @Length(max = 128, message = "Maximum characters for message is 128")
+    @NotNull
+    private String message;
+
+    @Min(value = 0, message = "Minimum value for message timeout is 0")
+    @Max(value = 10, message = "Maximum value for message timeout is 10")
+    @NotNull
+    private Integer messageTimeout;
+
+
+}

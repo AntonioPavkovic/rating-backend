@@ -5,6 +5,8 @@ import com.internship.ratingbackend.repository.SettingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
 @RequiredArgsConstructor
 @Service
 public class SettingService {
@@ -12,12 +14,12 @@ public class SettingService {
 
     public Setting getSettingById(Integer id)
     {
-        return settingRepository.findById(id).orElseThrow(()->new RuntimeException("Setting with id "+id+" doesn't exist"));
+        return settingRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Setting with id "+id+" doesn't exist"));
     }
 
     public void updateSetting(Setting newSetting) {
 
-        Setting setting = settingRepository.findById(1).orElseThrow(() -> new IllegalStateException("No setting with id " + 1));
+        Setting setting = settingRepository.findById(1).orElseThrow(() -> new EntityNotFoundException("No setting with id " + 1));
 
         if (newSetting.getEmotionNumber() != null)
             setting.setEmotionNumber(newSetting.getEmotionNumber());
