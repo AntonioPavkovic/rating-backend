@@ -52,16 +52,13 @@ public class Setting {
         this.message = Objects.requireNonNullElse(message, DEFAULT_MESSAGE_VALUE);
         this.messageTimeout = Objects.requireNonNullElse(messageTimeout, DEFAULT_MESSAGE_TIMEOUT_VALUE);
 
-        try {
-            if ((!ALLOWED_EMOTION_NUMBER_VALUES.contains(emotionNumber)) ||
-                    (message.length() < MIN_MESSAGE_LENGTH_VALUE || message.length() > MAX_MESSAGE_LENGTH_VALUE) ||
-                    (messageTimeout < MIN_MESSAGE_TIMEOUT_VALUE || messageTimeout > MAX_MESSAGE_TIMEOUT_VALUE)) {
-                throw new RuntimeException();
-            }
+        if (!ALLOWED_EMOTION_NUMBER_VALUES.contains(emotionNumber))
+            throw new IllegalArgumentException("Emotion number must be 3-5, provided:"+emotionNumber);
 
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
+        if((message.length() < MIN_MESSAGE_LENGTH_VALUE || message.length() > MAX_MESSAGE_LENGTH_VALUE))
+            throw new IllegalArgumentException("Message length must be 3-128(characters), provided:"+message.length());
 
+        if(messageTimeout < MIN_MESSAGE_TIMEOUT_VALUE || messageTimeout > MAX_MESSAGE_TIMEOUT_VALUE)
+            throw new IllegalArgumentException("Message timeout must be 0-10, provided:"+messageTimeout);
     }
 }

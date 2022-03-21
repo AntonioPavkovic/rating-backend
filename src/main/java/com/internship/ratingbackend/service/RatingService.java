@@ -14,6 +14,7 @@ import java.util.List;
 public class RatingService {
 
     private final RatingRepository ratingRepository;
+    private final Integer ALLOWED_RANGE_DATE_DAYS=30;
 
     public List<Rating> getRating() {
         return ratingRepository.findAll();
@@ -23,14 +24,17 @@ public class RatingService {
 
         Duration duration = Duration.between(fromDate, toDate);
 
-        if ((fromDate.isAfter(toDate) || duration.toDays() > 30))
-            throw new IllegalArgumentException("Date range is not valid");
+        if (fromDate.isAfter(toDate) )
+            throw new IllegalArgumentException("'from date' must be before 'to date'");
+
+        if(duration.toDays() > ALLOWED_RANGE_DATE_DAYS)
+            throw new IllegalArgumentException("Date range must be 30 days or less");
 
         return ratingRepository.getRatingByCreatedAtBetween(fromDate, toDate);
 
     }
 
-    public Rating save(Rating newRating) {
-        return ratingRepository.save(newRating);
+    public void createRating(Rating newRating) {
+        ratingRepository.save(newRating);
     }
 }
