@@ -1,7 +1,7 @@
 package com.internship.ratingbackend.controller;
 
-import com.internship.ratingbackend.command.UpdateSettingCommand;
-import com.internship.ratingbackend.dto.SettingDto;
+import com.internship.ratingbackend.dto.setting.SettingRequest;
+import com.internship.ratingbackend.dto.setting.SettingResponse;
 import com.internship.ratingbackend.model.Setting;
 import com.internship.ratingbackend.service.EmotionSettingService;
 import com.internship.ratingbackend.service.SettingService;
@@ -22,14 +22,14 @@ public class SettingController {
     private final ModelMapper modelMapper;
 
     @GetMapping()
-    public SettingDto getSetting() {
+    public SettingResponse getSetting() {
         return emotionSettingService.getSettingAndEmotionList();
     }
 
     @PatchMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateSetting(@Valid @RequestBody UpdateSettingCommand updateSettingCommand) {
-        Setting request = modelMapper.map(updateSettingCommand, Setting.class);
+    public void updateSetting(@Valid @RequestBody SettingRequest settingRequest) {
+        Setting request = modelMapper.map(settingRequest, Setting.class);
         settingService.updateSetting(request);
     }
 }

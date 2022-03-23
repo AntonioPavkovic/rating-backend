@@ -7,6 +7,9 @@
 -- Server version: 10.6.7-MariaDB-1:10.6.7+maria~focal
 -- PHP Version: 8.0.15
 
+CREATE DATABASE rating_app;
+USE rating_app
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -155,7 +158,7 @@ INSERT INTO `rating` (`id`, `created_at`, `emotion_id`) VALUES
 CREATE TABLE `setting` (
                            `id` int(11) NOT NULL,
                            `emotion_number` int(11) NOT NULL,
-                           `message` varchar(255) NOT NULL,
+                           `message` varchar(128),
                            `message_timeout` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
