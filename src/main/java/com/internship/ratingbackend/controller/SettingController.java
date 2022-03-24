@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +20,7 @@ public class SettingController {
     private final EmotionSettingService emotionSettingService;
     private final SettingService settingService;
     private final ModelMapper modelMapper;
+    
 
     @GetMapping()
     public SettingResponse getSetting() {
