@@ -1,6 +1,6 @@
 package com.internship.ratingbackend.service;
 
-import com.internship.ratingbackend.dto.SettingDto;
+import com.internship.ratingbackend.dto.setting.SettingResponse;
 import com.internship.ratingbackend.model.Emotion;
 import com.internship.ratingbackend.model.EmotionSetting;
 import com.internship.ratingbackend.model.Setting;
@@ -18,7 +18,7 @@ public class EmotionSettingService {
     private final EmotionSettingRepository emotionSettingRepository;
     private final SettingService settingService;
 
-    public SettingDto getSettingAndEmotionList() {
+    public SettingResponse getSettingAndEmotionList() {
         Setting setting = settingService.getSettingById(1);
         List<EmotionSetting> emotionSettingsByEmotionValue = this.getEmotionSettingByEmotionValue(setting.getEmotionNumber());
         List<Emotion> emotionList = new ArrayList<>();
@@ -27,7 +27,7 @@ public class EmotionSettingService {
             emotionList.add(emotionSetting.getEmotion());
         }
 
-        return new SettingDto(setting.getEmotionNumber(), setting.getMessage(), setting.getMessageTimeout(), emotionList);
+        return new SettingResponse(setting.getEmotionNumber(), setting.getMessage(), setting.getMessageTimeout(), emotionList);
     }
 
     public List<EmotionSetting> getEmotionSettingByEmotionValue(Integer emotionValue) {

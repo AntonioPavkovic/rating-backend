@@ -1,4 +1,4 @@
-package com.internship.ratingbackend.dto;
+package com.internship.ratingbackend.dto.setting;
 
 
 import com.internship.ratingbackend.model.Emotion;
@@ -9,12 +9,12 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class SettingDto {
+public class SettingResponse {
 
     private Integer emotionNumber;
     private String message;
     private Integer messageTimeout;
-    List<Emotion> emotions;
+    private List<Emotion> emotions;
 
 
 }

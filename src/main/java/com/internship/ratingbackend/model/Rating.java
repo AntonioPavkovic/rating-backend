@@ -1,5 +1,7 @@
 package com.internship.ratingbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +22,12 @@ public class Rating {
             strategy = GenerationType.IDENTITY
     )
     @Column(name = "id")
+    @JsonIgnore
     private Integer id;
 
     @Column(name = "created_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime createdAt;
-
     @ManyToOne()
     @JoinColumn(name = "emotion_id", nullable = false)
     private Emotion emotion;

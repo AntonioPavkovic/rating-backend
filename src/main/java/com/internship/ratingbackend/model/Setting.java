@@ -1,31 +1,24 @@
 package com.internship.ratingbackend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "setting")
 public class Setting {
-    private static final List<Integer> ALLOWED_EMOTION_NUMBER_VALUES = List.of(3, 4, 5);
-    private static final Integer DEFAULT_EMOTION_NUMBER_VALUES = 3;
-
-    private static final Integer MIN_MESSAGE_LENGTH_VALUE = 3;
-    private static final Integer MAX_MESSAGE_LENGTH_VALUE = 128;
-    private static final String DEFAULT_MESSAGE_VALUE = "Thank you for rating";
-
-    private static final Integer MIN_MESSAGE_TIMEOUT_VALUE = 0;
-    private static final Integer MAX_MESSAGE_TIMEOUT_VALUE = 10;
-    private static final Integer DEFAULT_MESSAGE_TIMEOUT_VALUE = 5;
-
 
     @Id
     @GeneratedValue(
@@ -34,31 +27,21 @@ public class Setting {
     @Column(name = "id")
     private Integer id;
 
+    @Min(value = 3, message = "Minimum value for emotions number is 3")
+    @Max(value = 5, message = "Maximum value for emotions number is 5")
+    @NotNull
+    @Column(name = "emotion_number", nullable = false, columnDefinition = "SMALLINT default 3")
+    private Integer emotionNumber=3;
 
-    @Column(name = "emotion_number", nullable = false, columnDefinition = "SMALLINT")
-    private Integer emotionNumber;
+    @Size(min = 3,max = 128,message = "Message length value must be in bounds 3-128 chars")
+    @Column(name = "message", columnDefinition = "VARCHAR(128) default 'Thank you for rating.'")
+    private String message="Thank you for rating.";
+
+    @Min(value = 0, message = "Minimum value for message timeout is 0")
+    @Max(value = 10, message = "Maximum value for message timeout is 10")
+    @NotNull
+    @Column(name = "message_timeout", nullable = false, columnDefinition = "SMALLINT default 5")
+    private Integer messageTimeout=5;
 
 
-    @Column(name = "message", nullable = false, columnDefinition = "VARCHAR(128)")
-    private String message;
-
-    @Column(name = "message_timeout", nullable = false, columnDefinition = "SMALLINT")
-    private Integer messageTimeout;
-
-
-    public Setting(Integer emotionNumber, String message, Integer messageTimeout) {
-
-        this.emotionNumber = Objects.requireNonNullElse(emotionNumber, DEFAULT_EMOTION_NUMBER_VALUES);
-        this.message = Objects.requireNonNullElse(message, DEFAULT_MESSAGE_VALUE);
-        this.messageTimeout = Objects.requireNonNullElse(messageTimeout, DEFAULT_MESSAGE_TIMEOUT_VALUE);
-
-        if (!ALLOWED_EMOTION_NUMBER_VALUES.contains(emotionNumber))
-            throw new IllegalArgumentException("Emotion number must be 3-5, provided:"+emotionNumber);
-
-        if((message.length() < MIN_MESSAGE_LENGTH_VALUE || message.length() > MAX_MESSAGE_LENGTH_VALUE))
-            throw new IllegalArgumentException("Message length must be 3-128(characters), provided:"+message.length());
-
-        if(messageTimeout < MIN_MESSAGE_TIMEOUT_VALUE || messageTimeout > MAX_MESSAGE_TIMEOUT_VALUE)
-            throw new IllegalArgumentException("Message timeout must be 0-10, provided:"+messageTimeout);
-    }
 }

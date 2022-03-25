@@ -2,37 +2,43 @@ version: '3.9'
 
 volumes:
   mariadb:
-    driver: local
-
-networks:
-  db:
-    driver: bridge
 
 services:
-  mariadb:
-    image: mariadb:10.6
+
+  rating-backend-application:
+    image: rating-backend-docker
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    expose:
-      - "40000"
     ports:
-      - "40000:3306"
+      - '9000:8080'
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile'
+    depends_on:
+      - db
+    links:
+      - db:app_db
+  db:
+    image: mariadb:10.6
+    container_name: mariadb-container
+    restart: always
+    ports:
+     - '3306:3306'
     volumes:
       - mariadb:/var/lib/mysql
-      - ./src/main/resources/db_data/:/docker-entrypoint-initdb.d
-    networks:
-      db:
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    expose:
-      - "40001"
-    ports:
-      - "40001:80"
+      - ./src/main/resources/db/init_db/:/docker-entrypoint-initdb.d
     environment:
-      - PMA_HOST=mariadb
-      - PMA_PORT=3306
-    networks:
-      db:
+      MYSQL_ROOT_PASSWORD: root
+
+  phphmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    restart: always
+    depends_on:
+      - db
+    ports:
+     - '8000:80'
+    environment:
+      - PMA_HOST=db
+
+
+

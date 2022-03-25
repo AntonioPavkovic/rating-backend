@@ -19,12 +19,13 @@ public class SettingService {
 
     public void updateSetting(Setting newSetting) {
 
-        Setting setting = settingRepository.findById(1).orElseThrow(() -> new EntityNotFoundException("No setting with id " + 1));
+        Setting setting = settingRepository.findById(1).orElseThrow(() -> new EntityNotFoundException("No setting with id 1"));
 
         if (newSetting.getEmotionNumber() != null)
             setting.setEmotionNumber(newSetting.getEmotionNumber());
-        if (newSetting.getMessage() != null)
-            setting.setMessage(newSetting.getMessage());
+
+        setting.setMessage(newSetting.getMessage());
+
         if (newSetting.getMessageTimeout() != null)
             setting.setMessageTimeout(newSetting.getMessageTimeout());
 
