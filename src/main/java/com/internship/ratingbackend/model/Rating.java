@@ -1,5 +1,6 @@
 package com.internship.ratingbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,8 +26,8 @@ public class Rating {
     private Integer id;
 
     @Column(name = "created_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime createdAt;
-
     @ManyToOne()
     @JoinColumn(name = "emotion_id", nullable = false)
     private Emotion emotion;
