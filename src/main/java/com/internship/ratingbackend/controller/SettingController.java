@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(path = "api/v1/settings")
 public class SettingController {
 
