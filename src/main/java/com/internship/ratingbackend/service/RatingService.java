@@ -4,6 +4,7 @@ import com.internship.ratingbackend.dto.rating.RatingResponse;
 import com.internship.ratingbackend.model.Rating;
 import com.internship.ratingbackend.repository.RatingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -54,4 +55,10 @@ public class RatingService {
     {
         return new RatingResponse(rating);
     }
+
+    @Scheduled(fixedRate = 5000)
+    public void checkRatings() {
+        System.out.println("test");
+    }
+
 }

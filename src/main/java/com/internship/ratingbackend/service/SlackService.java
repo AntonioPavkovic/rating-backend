@@ -2,10 +2,14 @@ package com.internship.ratingbackend.service;
 
 import java.io.IOException;
 
+import com.slack.api.bolt.App;
+import com.slack.api.bolt.AppConfig;
 import com.slack.api.methods.SlackApiException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -14,62 +18,30 @@ import com.github.seratch.jslack.api.webhook.Payload;
 import com.github.seratch.jslack.api.webhook.WebhookResponse;
 
 @Service
+@RequiredArgsConstructor
 public class SlackService {
 
-//    private static String webHooksUrl = "https://hooks.slack.com/services/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";
-//    private static String oAuthToken  = "xoxb-3309307669906-3315169949522-L6acVmaoS8nVfcgkmmaUDgR4";
-//    private static String slackChannel = "rating-app";
-//
-//    public static void publishMessage(String id, String text) {
-//
-//        var client = Slack.getInstance().methods();
-//        var logger = LoggerFactory.getLogger(slackChannel);
-//
-//        try {
-//            var result = client.chatPostMessage(r -> r.token(oAuthToken).text(text));
-//            logger.info("Result: {} " +result);
-//        }catch (IOException | com.github.seratch.jslack.api.methods.SlackApiException e) {
-//            logger.error("Error: {}" + e.getMessage(), e);
-//        }
-//
-//    }
+    //@Value("${slack.team.bot.token}")
+    private static String botToken="xoxb-3309307669906-3307152237605-TA3BUeCS01tYaFYMx1On98Ll";
 
+    //@Value("${slack.signin.secret}")
+    private static String signInSecret="1d918c6cd10d8aaaa7b91d8fab2c5c42";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SlackService.class);
-    private static final String NEW_LINE = "\n";
-    private static String slackChannel = "#rating-app";
+    //@Value("${slack.channel}")
+    private static String channel="C038NM20QHM";
 
-    @Value("${slack.webhook}")
-    private String urlSlackWebhook;
+    @Scheduled(fixedRate = 1000)
+    public static void publishMessage() throws Exception {
+        var config = new AppConfig();
+        config.setSingleTeamBotToken(botToken);
+        config.setSigningSecret(signInSecret);
+        var app = new App(config); // `new App()` does the same
 
-    public void sendMessageToSlack(String message) {
-
-        StringBuilder messageBuilder = new StringBuilder();
-        messageBuilder.append("My message: " + message + NEW_LINE);
-        messageBuilder.append("Item example: " + exampleMessage() +NEW_LINE);
-
-        process(messageBuilder.toString());
-    }
-
-    private void process(String message) {
-        Payload payload = Payload.builder()
-                .channel(slackChannel)
-                .username("rating")
-                .iconEmoji(":rocket:")
-                .text(message)
-                .build();
-
-        try {
-            WebhookResponse webhookResponse = Slack.getInstance().send(urlSlackWebhook, payload);
-            LOGGER.info("code -> " + webhookResponse.getCode());
-            LOGGER.info("body -> " + webhookResponse.getBody());
-        } catch (IOException e) {
-            LOGGER.error("Unexpected error! WebHook " + urlSlackWebhook);
-        }
-    }
-
-    private String exampleMessage() {
-        return "Pls work";
+        app.client().chatPostMessage(r -> r
+                .channel(channel)
+                .token(botToken)
+                .text("text"));
     }
 
 }
+
