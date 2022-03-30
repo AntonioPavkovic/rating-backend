@@ -22,13 +22,13 @@ import com.github.seratch.jslack.api.webhook.WebhookResponse;
 public class SlackService {
 
     //@Value("${slack.team.bot.token}")
-    private static String botToken="xoxb-3309307669906-3307152237605-TA3BUeCS01tYaFYMx1On98Ll";
+    private static String botToken;
 
     //@Value("${slack.signin.secret}")
-    private static String signInSecret="1d918c6cd10d8aaaa7b91d8fab2c5c42";
+    private static String signInSecret
 
     //@Value("${slack.channel}")
-    private static String channel="C038NM20QHM";
+    private static String channel;
 
     @Scheduled(fixedRate = 1000)
     public static void publishMessage() throws Exception {
