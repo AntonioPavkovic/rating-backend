@@ -1,16 +1,22 @@
 package com.internship.ratingbackend.service;
 
+import com.internship.ratingbackend.config.AppProperties;
 import com.internship.ratingbackend.model.Setting;
 import com.internship.ratingbackend.repository.SettingRepository;
+import com.pusher.rest.Pusher;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class SettingService {
     private final SettingRepository settingRepository;
+    private final Pusher pusher;
+    private final AppProperties appProperties;
 
     public Setting getSettingById(Integer id)
     {
@@ -28,6 +34,9 @@ public class SettingService {
 
         if (newSetting.getMessageTimeout() != null)
             setting.setMessageTimeout(newSetting.getMessageTimeout());
+
+        log.info("Sending update to pusher");
+        pusher.trigger("rating-app", "settings-updated", setting);
 
         settingRepository.save(setting);
 

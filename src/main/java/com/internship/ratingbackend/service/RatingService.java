@@ -66,6 +66,7 @@ public class RatingService {
     @Scheduled(cron = "*/86400 * * * * *")
     @SneakyThrows
     public void sendSlackReport() {
+        
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalDateTime morningDateTime = LocalDateTime.now();
 
