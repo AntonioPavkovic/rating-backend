@@ -1,5 +1,5 @@
 package com.internship.ratingbackend;
-import com.internship.ratingbackend.service.SlackService;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -8,7 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class RatingBackendApplication {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication.run(RatingBackendApplication.class, args);
 	}
+
 }

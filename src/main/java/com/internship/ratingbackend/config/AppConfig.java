@@ -1,19 +1,21 @@
 package com.internship.ratingbackend.config;
 
-import com.internship.ratingbackend.service.SlackService;
 import com.pusher.rest.Pusher;
-import com.slack.api.Slack;
-import com.slack.api.webhook.Payload;
-import com.slack.api.webhook.WebhookResponse;
+import com.github.seratch.jslack.Slack; 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
-
 
 @Configuration
+@RequiredArgsConstructor
 public class AppConfig {
+
+    private final AppProperties appProperties;
+
+
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
@@ -21,17 +23,15 @@ public class AppConfig {
 
     @Bean
     public Pusher pusherClient() {
-        Pusher pusher = new Pusher("1368402", "6eaf9b744f4f90711be8", "cde0cab392b91ee60215");
-        pusher.setCluster("eu");
+        Pusher pusher = new Pusher(appProperties.getPusherAppId(), appProperties.getPusherKey(), appProperties.getPusherSecret());
+        pusher.setCluster(appProperties.getPusherCluster());
         pusher.setEncrypted(true);
 
         return pusher;
     }
 
-//    @Bean
-//    public void slackMessage() throws Exception {
-//        SlackService slackService = new SlackService();
-//        slackService.publishMessage("do u work?");
-//    }
-
+    @Bean
+    public Slack getSlack() {
+        return Slack.getInstance();
+    }
 }
