@@ -26,8 +26,9 @@ public class Rating {
     private Integer id;
 
     @Column(name = "created_at")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
+  
     @ManyToOne()
     @JoinColumn(name = "emotion_id", nullable = false)
     private Emotion emotion;
