@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class RatingController {
     }
 
     @PostMapping()
-    public ResponseEntity<RatingResponse> createRating(@RequestBody RatingRequest ratingRequest) {
+    public ResponseEntity<RatingResponse> createRating(@RequestBody @Valid RatingRequest ratingRequest) {
         Rating rating = new Rating(emotionService.findEmotionById(ratingRequest.getEmotionId()));
 
         ratingService.createRating(rating);

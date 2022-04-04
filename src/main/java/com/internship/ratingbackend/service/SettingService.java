@@ -1,5 +1,6 @@
 package com.internship.ratingbackend.service;
 
+import com.internship.ratingbackend.dto.setting.SettingRequest;
 import com.internship.ratingbackend.model.Setting;
 import com.internship.ratingbackend.repository.SettingRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class SettingService {
         return settingRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Setting with id "+id+" doesn't exist"));
     }
 
-    public void updateSetting(Setting newSetting) {
+    public void updateSetting(SettingRequest newSetting) {
 
         Setting setting = settingRepository.findById(1).orElseThrow(() -> new EntityNotFoundException("No setting with id 1"));
 
