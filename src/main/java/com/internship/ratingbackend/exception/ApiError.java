@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 public class ApiError {
     private HttpStatus status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "Europe/Zagreb")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss", timezone = "Europe/Zagreb")
     private LocalDateTime timestamp;
     private String message;
     private String debugMessage;
