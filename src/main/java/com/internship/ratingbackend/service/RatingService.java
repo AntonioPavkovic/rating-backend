@@ -1,13 +1,16 @@
 package com.internship.ratingbackend.service;
 
-import com.github.seratch.jslack.Slack;
-import com.github.seratch.jslack.api.webhook.WebhookResponse;
 import com.internship.ratingbackend.config.AppProperties;
+import com.internship.ratingbackend.dto.rating.RatingRequest;
 import com.internship.ratingbackend.dto.rating.RatingResponse;
 
+import com.internship.ratingbackend.model.Emotion;
 import com.internship.ratingbackend.model.Rating;
 
+import com.internship.ratingbackend.repository.EmotionRepository;
 import com.internship.ratingbackend.repository.RatingRepository;
+import com.slack.api.Slack;
+import com.slack.api.webhook.WebhookResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +22,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -27,31 +31,12 @@ import java.util.List;
 public class RatingService {
 
     private final RatingRepository ratingRepository;
+    private final EmotionRepository emotionRepository;
     private final Integer ALLOWED_RANGE_DATE_DAYS = 30;
     private final AppProperties appProperties;
     private final Slack slack;
-//    private final EmotionRepository emotionRepository;
 
 
-
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void fillUpDB() {
-//        for(int i= 1; i<50; i++) {
-//            double randomDouble = ((Math.random() * (5 - 1)) + 1);
-//            Long random = Math.round(randomDouble);
-//            long endDate = Instant.now().getEpochSecond();
-//            long startDate = 1625913220L;
-//            long randomEpoch = ThreadLocalRandom
-//                    .current()
-//                    .nextLong(startDate, endDate);
-//            Instant randomDate = Instant.ofEpochSecond(randomEpoch);
-//            Optional<Emotion> emoji = emotionRepository.findById(Math.toIntExact(random));
-//            if(emoji.isPresent()) {
-//                Rating rating = new Rating(emoji.get(), randomDate);
-//                ratingRepository.save(rating);
-//            }
-//        }
-//    }
 
     /*
      * Method takes two parameters, 'fromDate' and 'toDate' and returns ratings between those two dates
@@ -73,8 +58,28 @@ public class RatingService {
 
     }
 
-    public void createRating(Rating rating) {
-        ratingRepository.save(rating);
+//    public void createRating(Rating rating) {
+//        ratingRepository.save(rating);
+//    }
+
+    public RatingResponse createRating(RatingRequest request) {
+
+        RatingResponse response = new RatingResponse();
+        Optional<Emotion> emotion = emotionRepository.findById(request.getEmotionId());
+
+        if(emotion.isPresent()) {
+
+            Rating rating = new Rating(emotion.get());
+            ratingRepository.save(rating);
+
+            response.setRating(rating);
+
+            return response;
+        }
+
+        log.info("400 Bad Request!");
+        return response;
+
     }
 
     public List<RatingResponse> buildAll(LocalDateTime fromDate, LocalDateTime toDate)

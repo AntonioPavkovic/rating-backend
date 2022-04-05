@@ -44,4 +44,9 @@ public class Setting {
     private Integer messageTimeout=5;
 
 
+    public Setting(int emotionNumber, String message, int messageTimeout) {
+        this.emotionNumber = emotionNumber;
+        this.message = message;
+        this.messageTimeout = messageTimeout;
+    }
 }

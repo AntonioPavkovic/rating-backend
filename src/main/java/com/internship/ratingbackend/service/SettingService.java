@@ -3,23 +3,27 @@ package com.internship.ratingbackend.service;
 import com.internship.ratingbackend.model.Setting;
 import com.internship.ratingbackend.repository.SettingRepository;
 import com.pusher.rest.Pusher;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
-@RequiredArgsConstructor
+
+@AllArgsConstructor
 @Service
 @Slf4j
 public class SettingService {
     private final SettingRepository settingRepository;
+    private final EmotionService emotionService;
     private final Pusher pusher;
 
     public Setting getSettingById(Integer id)
     {
         return settingRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Setting with id "+id+" doesn't exist"));
     }
+
 
     public void updateSetting(Setting newSetting) {
 

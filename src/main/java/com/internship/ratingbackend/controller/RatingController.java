@@ -6,11 +6,13 @@ import com.internship.ratingbackend.model.Rating;
 import com.internship.ratingbackend.service.EmotionService;
 import com.internship.ratingbackend.service.RatingService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("api/v1/ratings")
+@Slf4j
 public class RatingController {
 
     private final RatingService ratingService;
@@ -33,11 +36,28 @@ public class RatingController {
     }
 
     @PostMapping()
-    public ResponseEntity<RatingResponse> createRating(@RequestBody RatingRequest ratingRequest) {
-        Rating rating = new Rating(emotionService.findEmotionById(ratingRequest.getEmotionId()));
+    public ResponseEntity<RatingResponse> createRating(@Valid @RequestBody RatingRequest ratingRequest) {
 
-        ratingService.createRating(rating);
-        return new ResponseEntity<>(ratingService.buildSingle(rating), HttpStatus.CREATED);
+        RatingResponse response = new RatingResponse();
+
+        try {
+            log.info("Creating rating!");
+            response = ratingService.createRating(ratingRequest);
+
+            if (response.getRating() != null) {
+                log.info("Rating created!");
+                return new ResponseEntity<>(response, HttpStatus.CREATED);
+            }
+            else {
+                log.warn("Error occurred while creating rating!");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+
+        } catch (Exception e) {
+            log.error("An error has occurred!");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }
