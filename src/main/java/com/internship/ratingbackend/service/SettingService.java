@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class SettingService {
+
     private final SettingRepository settingRepository;
 
     public Setting getSettingById(Integer id)
@@ -20,17 +23,18 @@ public class SettingService {
 
     public void updateSetting(SettingRequest newSetting) {
 
-        Setting setting = settingRepository.findById(1).orElseThrow(() -> new EntityNotFoundException("No setting with id 1"));
+        Optional<Setting> setting = settingRepository.findById(1);
 
-        if (newSetting.getEmotionNumber() != null)
-            setting.setEmotionNumber(newSetting.getEmotionNumber());
+        if(setting.isPresent()) {
+            setting.get().setEmotionNumber(newSetting.getEmotionNumber());
+            setting.get().setMessage(newSetting.getMessage());
+            setting.get().setMessageTimeout(newSetting.getMessageTimeout());
+            settingRepository.save(setting.get());
+            if (setting.get().getMessage() == null) {
+                setting.get().setMessage("");
+            }
+        }
 
-        setting.setMessage(newSetting.getMessage());
-
-        if (newSetting.getMessageTimeout() != null)
-            setting.setMessageTimeout(newSetting.getMessageTimeout());
-
-        settingRepository.save(setting);
 
     }
 }

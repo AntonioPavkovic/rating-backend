@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AppUser {
+public class CustomUser {
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY

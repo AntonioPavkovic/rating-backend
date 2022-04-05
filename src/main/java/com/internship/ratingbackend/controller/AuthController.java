@@ -1,26 +1,27 @@
 package com.internship.ratingbackend.controller;
 
-import com.internship.ratingbackend.dto.auth.TokenResponse;
+import com.internship.ratingbackend.dto.auth.TokenRequest;
+import com.internship.ratingbackend.service.CustomUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/auth")
 public class AuthController {
 
+    private final CustomUserService customUserService;
 
-
-    @GetMapping
-    public ResponseEntity<TokenResponse> authorize(HttpServletRequest request)
-    {
-        TokenResponse tokenResponse = new TokenResponse(request.getQueryString());
-        return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void logout(@RequestBody TokenRequest token) {
+        try {
+            customUserService.revokeToken(token);
+        }catch (IOException e)
+        {
+            e.getLocalizedMessage();
+        }
     }
 }

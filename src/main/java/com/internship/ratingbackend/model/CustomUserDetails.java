@@ -9,21 +9,19 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class MyUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
-    private final AppUser appUser;
+    private final CustomUser customUser;
 
-    public MyUserDetails(AppUser appUser) {
-        this.appUser = appUser;
+    public CustomUserDetails(CustomUser customUser) {
+        this.customUser = customUser;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        CustomUserRole role = appUser.getCustomUserRole();
 
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-        authorities.add(new SimpleGrantedAuthority(role.toString()));
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + customUser.getCustomUserRole()));
 
         return authorities;
     }
@@ -57,4 +55,5 @@ public class MyUserDetails implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
 }

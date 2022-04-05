@@ -5,4 +5,7 @@ CREATE TABLE IF NOT EXISTS custom_user (
     )ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 INSERT INTO custom_user (email,custom_user_role) VALUES ('mdugandzic67@gmail.com','ADMIN'),
-                                                    ('antoniopavkovic999@gmail.com','ADMIN');
+                                                        ('antoniopavkovic999@gmail.com','ADMIN'),
+                                                        ('mar.tomo123@gmail.com','USER'),
+                                                        ('danijelsain2012@gmail.com','USER');
+

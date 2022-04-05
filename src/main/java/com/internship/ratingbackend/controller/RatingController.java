@@ -25,12 +25,13 @@ public class RatingController {
     private final EmotionService emotionService;
 
 
-    // method/route that gets ratings between two dates
     @GetMapping()
-    public ResponseEntity<List<RatingResponse>> getRatingByCreatedAtBetween(@RequestParam(name = "fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
-                                                                            @RequestParam(name = "toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate) {
+    public ResponseEntity<List<RatingResponse>> getRatingByCreatedAtBetween
+    (@RequestParam(name = "fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
+     @RequestParam(name = "toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate) {
 
         return new ResponseEntity<>(ratingService.buildAll(fromDate, toDate), HttpStatus.OK);
+
     }
 
     @PostMapping()
