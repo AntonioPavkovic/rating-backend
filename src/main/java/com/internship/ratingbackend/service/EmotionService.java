@@ -4,7 +4,6 @@ import com.internship.ratingbackend.model.Emotion;
 import com.internship.ratingbackend.repository.EmotionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor

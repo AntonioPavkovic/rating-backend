@@ -5,7 +5,6 @@ import com.internship.ratingbackend.model.Setting;
 import com.internship.ratingbackend.repository.SettingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityNotFoundException;
 
 import java.util.Optional;

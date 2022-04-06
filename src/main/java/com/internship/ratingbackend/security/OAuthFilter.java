@@ -4,6 +4,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.internship.ratingbackend.dto.auth.TokenRequest;
 import com.internship.ratingbackend.service.CustomUserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,9 +23,12 @@ import java.security.GeneralSecurityException;
 
 @RequiredArgsConstructor
 @Component
+@Configuration
+@Slf4j
 public class OAuthFilter extends OncePerRequestFilter {
 
     private final CustomUserService customUserService;
+    private final String BEARER="Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -36,7 +41,7 @@ public class OAuthFilter extends OncePerRequestFilter {
         String email = null;
         TokenRequest tokenRequest = new TokenRequest();
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith(BEARER)) {
             tokenRequest.setToken(authorizationHeader.substring(7));
             try {
                 GoogleIdToken.Payload json = customUserService.validateToken(tokenRequest);
@@ -48,12 +53,12 @@ public class OAuthFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
-                UserDetails user = customUserService.loadUserByUsername(email);
-                System.out.println("User found");
+                UserDetails userDetails = customUserService.loadUserByUsername(email);
+                log.info("User successfully found");
                 var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        user,
+                        userDetails,
                         null,
-                        user.getAuthorities()
+                        userDetails.getAuthorities()
                 );
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -61,10 +66,18 @@ public class OAuthFilter extends OncePerRequestFilter {
                         .setAuthentication(usernamePasswordAuthenticationToken);
 
             } catch (UsernameNotFoundException e) {
-                System.out.println("User not found");
+                log.info("Unable to find a user...");
             }
 
         }
         filterChain.doFilter(request, response);
+    }
+
+    private String extractAuthorizationHeaderAsString(HttpServletRequest request) {
+        try {
+            return request.getHeader("Authorization");
+        } catch (Exception ex){
+            throw new RuntimeException("There is no Authorization header in a request", ex);
+        }
     }
 }

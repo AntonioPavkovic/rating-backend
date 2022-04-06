@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS custom_user (
 
 INSERT INTO custom_user (email,custom_user_role) VALUES ('mdugandzic67@gmail.com','ADMIN'),
                                                         ('antoniopavkovic999@gmail.com','ADMIN'),
-                                                        ('mar.tomo123@gmail.com','USER'),
-                                                        ('danijelsain2012@gmail.com','USER');
+                                                        ('mar.tomo123@gmail.com','ADMIN'),
+                                                        ('danijelsain2012@gmail.com','ADMIN');
 

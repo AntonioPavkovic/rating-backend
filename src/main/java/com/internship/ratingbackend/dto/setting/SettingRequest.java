@@ -2,7 +2,6 @@ package com.internship.ratingbackend.dto.setting;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

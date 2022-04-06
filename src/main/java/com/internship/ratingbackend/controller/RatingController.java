@@ -37,7 +37,6 @@ public class RatingController {
     @PostMapping()
     public ResponseEntity<RatingResponse> createRating(@RequestBody @Valid RatingRequest ratingRequest) {
         Rating rating = new Rating(emotionService.findEmotionById(ratingRequest.getEmotionId()));
-
         ratingService.createRating(rating);
         return new ResponseEntity<>(ratingService.buildSingle(rating), HttpStatus.CREATED);
     }
