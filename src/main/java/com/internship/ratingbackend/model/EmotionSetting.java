@@ -22,7 +22,7 @@ public class EmotionSetting {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne()
     @JoinColumn(name = "emotion_id", nullable = false)
     Emotion emotion;
 

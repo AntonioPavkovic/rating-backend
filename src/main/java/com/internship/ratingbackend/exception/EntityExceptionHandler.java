@@ -3,6 +3,7 @@ package com.internship.ratingbackend.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,8 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
 public class EntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -41,4 +41,5 @@ public class EntityExceptionHandler extends ResponseEntityExceptionHandler {
         ApiError apiError=new ApiError(NOT_FOUND,ex);
         return new ResponseEntity<>(apiError, NOT_FOUND);
     }
+
 }

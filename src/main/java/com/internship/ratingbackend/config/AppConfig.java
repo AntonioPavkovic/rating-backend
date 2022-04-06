@@ -1,5 +1,6 @@
 package com.internship.ratingbackend.config;
 
+
 import com.pusher.rest.Pusher;
 import com.github.seratch.jslack.Slack; 
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,6 @@ public class AppConfig {
     private final AppProperties appProperties;
 
 
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
     @Bean
     public Pusher pusherClient() {
         Pusher pusher = new Pusher(appProperties.getPusherAppId(), appProperties.getPusherKey(), appProperties.getPusherSecret());
@@ -34,4 +29,5 @@ public class AppConfig {
     public Slack getSlack() {
         return Slack.getInstance();
     }
+
 }

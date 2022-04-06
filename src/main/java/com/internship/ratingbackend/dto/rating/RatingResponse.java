@@ -1,7 +1,6 @@
 package com.internship.ratingbackend.dto.rating;
 
 
-import com.internship.ratingbackend.model.Emotion;
 import com.internship.ratingbackend.model.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
