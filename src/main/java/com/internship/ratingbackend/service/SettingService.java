@@ -8,7 +8,7 @@ import com.internship.ratingbackend.model.Setting;
 import com.internship.ratingbackend.repository.EmotionSettingRepository;
 import com.internship.ratingbackend.repository.SettingRepository;
 import com.pusher.rest.Pusher;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 @Slf4j
 public class SettingService {
