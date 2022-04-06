@@ -3,7 +3,6 @@ package com.internship.ratingbackend.service;
 import com.internship.ratingbackend.config.AppProperties;
 import com.internship.ratingbackend.dto.rating.RatingResponse;
 import com.internship.ratingbackend.model.Rating;
-import com.internship.ratingbackend.repository.EmotionRepository;
 import com.internship.ratingbackend.repository.RatingRepository;
 import com.slack.api.Slack;
 import com.slack.api.webhook.WebhookResponse;
@@ -65,7 +64,7 @@ public class RatingService {
         return new RatingResponse(rating);
     }
 
-    @Scheduled(cron = "*/1 * * * * *")
+    @Scheduled(cron = "0 59 23 * * *")
     @SneakyThrows
     public void sendSlackReport() {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -78,10 +77,10 @@ public class RatingService {
         List<Rating> list = ratingRepository.getRatingByCreatedAtBetween(morningDateTime, localDateTime);
 
         if((long) list.size() < 50) {
-            log.info("Sending scheduled slack report! Ratings are lower then 10");
+            log.info("Sending scheduled slack report! Ratings are lower then 50");
 
             String webhookUrl = appProperties.getSlackReportLink();
-            String payload =  "{\"text\":\"There has been less than 10 ratings today!\"}";
+            String payload =  "{\"text\":\"There has been less than 50 ratings today!\"}";
 
             WebhookResponse response = slack.send(webhookUrl, payload);
 
