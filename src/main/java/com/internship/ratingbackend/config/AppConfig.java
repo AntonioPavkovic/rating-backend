@@ -2,9 +2,8 @@ package com.internship.ratingbackend.config;
 
 
 import com.pusher.rest.Pusher;
-import com.github.seratch.jslack.Slack; 
+import com.slack.api.Slack;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
