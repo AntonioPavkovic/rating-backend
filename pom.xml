@@ -90,7 +90,7 @@
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
 			<version>2.4.2.RELEASE</version>
-		</dependency>-->
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.api-client</groupId>
@@ -135,8 +135,8 @@
 			<artifactId>slack-api-client</artifactId>
 			<version>1.20.2</version>
 		</dependency>
+	</dependencies>
 
-    </dependencies>
 
 	<build>
 		<finalName>rating-backend</finalName>
