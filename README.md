@@ -1,16 +1,17 @@
-#Rating-app
+# Rating-app
 
-##About this project
+## About this project
 
 
 
-###What is it all about?
+### What is it all about?
 *Rating application is a simple application that is used for simple
 rating of experience inside certain facility. It is usually used at 
 exits on airports, restaurants, banks etc.This repository contains spring 
 boot backend service api which is protected by oAuth2.0*
+
 ---
-###What technologies we used?
+### What technologies we used?
 
 - Java 
 - Maven
@@ -22,14 +23,14 @@ boot backend service api which is protected by oAuth2.0*
 - Pusher
 - Slack api
 ---
-###What are the prerequisites for application to start?
+### What are the prerequisites for application to start?
 
 *You only need to have docker and docker compose services installed 
 on your machine.*
 
 ---
 
-###How to run the application?
+### How to run the application?
 *All you need to do is clone this repository to your machine,
 position yourself in a rating-app folder and run docker-compose up -d command.
 It will execute docker-compose.yml file which contains these three services*:
@@ -52,7 +53,7 @@ Database credentials:
 - Password:**root**
 ---
 
-###Database and available endpoints
+### Database and available endpoints
 
 *Database rating_app consists of five tables*:
 - **Emotion**
@@ -61,12 +62,12 @@ Database credentials:
 - **Emotion-Setting**
 - **Custom-User**
 
-###Emotion
+### Emotion
 
 *This table holds information about available emotion(emoji), by default 
 it has 5 rows, each row has emotion id, name and color.*
 ---
-###Setting
+### Setting
 
 *This table holds information about current setting, it has only one row 
 with 3 columns, number of emotions(emojis) which is set to user view,
@@ -93,24 +94,24 @@ There are some validation rules applied to these columns*:
 - **maximum: 10**
 - **default: 5**
 ---
-###Rating
+### Rating
 
 *This table holds information about all ratings applied.It stores data about 
 when the rating is applied(createdAt) and which emotion is applied(emotionId).
 This table is connected to rating table with **Many-To-One** relationship.*
 ---
-###Emotion-Setting
+### Emotion-Setting
 
 *This table holds information about order in which the emotions will be presented
 on the user-view depending on which setting(number of emotion) is set.
 This table is connected on emotion with **Many-To-One** relationship.*
 ---
-###Custom-User
+### Custom-User
 
 *This table will hold information about our users which have access to some endpoints
 that are protected with OAuth2 protocol*.
 ---
-###Available endpoints
+### Available endpoints
 
 **Public:**
 
@@ -123,7 +124,7 @@ that are protected with OAuth2 protocol*.
 
 ---
 
-###Authorization
+### Authorization
 
 *For authorization, we used OAuth2 protocol(Implicit flow because our frontend is Single page app).
 To be able to access our protected endpoints you should provide Bearer token
@@ -131,7 +132,7 @@ in header of every request(because Session Management is set to **Stateless**)*
 
 ---
 
-###Pusher
+### Pusher
 
 *In our project, we also used Pusher, JSON based protocol used by clients to communicate with Pusher Channels,
 mainly over a ***WebSocket*** connection.With pusher, we managed to send information
@@ -140,7 +141,7 @@ and apply changes without page refresh.*
 
 ---
 
-###Slack
+### Slack
 
 *We also used ***Slack api*** for sending messages to Slack channel once per a day 
 if number of daily ratings is lower than expected.*
