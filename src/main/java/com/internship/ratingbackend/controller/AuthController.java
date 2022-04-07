@@ -23,6 +23,7 @@ import java.security.GeneralSecurityException;
  */
 
 @RestController
+@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("api/v1/auth")
 public class AuthController {
