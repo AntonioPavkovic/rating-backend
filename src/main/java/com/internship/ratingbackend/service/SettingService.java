@@ -23,7 +23,6 @@ import java.util.Optional;
  * @see Setting
  */
 
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Service
 @Slf4j
