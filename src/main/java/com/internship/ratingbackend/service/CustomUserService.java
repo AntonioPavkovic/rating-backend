@@ -19,6 +19,12 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Optional;
 
+/**
+ * Service class for CustomUser that implements UserDetailService
+ *
+ * @see CustomUser
+ */
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserService implements UserDetailsService {
@@ -26,6 +32,13 @@ public class CustomUserService implements UserDetailsService {
     private final CustomUserRepository customUserRepository;
     private final AppProperties appProperties;
 
+    /**
+     * Method which finds user by username, if it can't find by username throws exception
+     *
+     * @param email
+     * @return user details
+     * @throws UsernameNotFoundException
+     */
 
     @Override
     public UserDetails loadUserByUsername(String email)
@@ -37,6 +50,15 @@ public class CustomUserService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("Could not find user");
     }
+
+    /**
+     * Method that receives a token and then calls Google to validate it, if unsuccessful throws exception
+     *
+     * @param token
+     * @return token payload
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
 
     public GoogleIdToken.Payload validateToken(TokenRequest token) throws GeneralSecurityException, IOException {
 

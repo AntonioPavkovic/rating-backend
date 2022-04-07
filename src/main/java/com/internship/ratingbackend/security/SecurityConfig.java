@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Security configuration of the application
+ */
 
 @EnableWebSecurity
 @Configuration
@@ -18,6 +21,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private final OAuthFilter oAuthFilter;
+
+    /**
+     * config method that protects routes
+     *
+     * @param http
+     * @throws Exception
+     */
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {http

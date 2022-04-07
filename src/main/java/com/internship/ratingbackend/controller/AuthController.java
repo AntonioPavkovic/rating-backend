@@ -13,6 +13,15 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+/**
+ * AuthController - a rest controller with a custom route for user auth
+ *
+ * @see CustomUserService
+ * @see AuthResponse
+ * @see TokenRequest
+ *
+ */
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/auth")
@@ -20,6 +29,12 @@ public class AuthController {
 
     private final CustomUserService customUserService;
 
+    /**
+     * API endpoint - a method that authorizes user
+     *
+     * @param token
+     * @return ResponseEntity with authResponse
+     */
 
     @GetMapping()
     public ResponseEntity<AuthResponse> authorize(@RequestBody @Valid TokenRequest token) {
@@ -39,6 +54,5 @@ public class AuthController {
             return new ResponseEntity<>(authResponse,HttpStatus.UNAUTHORIZED);
         }
     }
-
 
 }
