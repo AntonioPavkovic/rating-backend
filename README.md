@@ -59,10 +59,11 @@ Database credentials:
 - **Emotion-Setting**
 - **Custom-User**
 
-### Emotion
+### Emotion 
 
 *This table holds information about available emotion(emoji), by default 
 it has 5 rows, each row has emotion id, name and color.*
+
 ---
 ### Setting
 
@@ -71,7 +72,7 @@ with 3 columns, number of emotions(emojis) which is set to user view,
 message that will pop after user rates some service and message delay column,
 which holds information for how long should message stay on screen before it 
 resets to a previous screen.
-There are some validation rules applied to these columns*:
+There are some validation rules applied to these columns:*
 
 **Number of emotions:**
 
@@ -96,17 +97,20 @@ There are some validation rules applied to these columns*:
 *This table holds information about all ratings applied.It stores data about 
 when the rating is applied(createdAt) and which emotion is applied(emotionId).
 This table is connected to rating table with **Many-To-One** relationship.*
+
 ---
 ### Emotion-Setting
 
 *This table holds information about order in which the emotions will be presented
 on the user-view depending on which setting(number of emotion) is set.
 This table is connected on emotion with **Many-To-One** relationship.*
+
 ---
 ### Custom-User
 
 *This table will hold information about our users which have access to some endpoints
 that are protected with OAuth2 protocol*.
+
 ---
 ### Available endpoints
 
