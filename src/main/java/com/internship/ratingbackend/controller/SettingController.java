@@ -20,6 +20,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 @RequestMapping(path = "api/v1/settings")
 public class SettingController {
 

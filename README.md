@@ -19,6 +19,7 @@ boot backend service api which is protected by oAuth2.0*
 - OAuth2
 - Pusher
 - Slack api
+- Swagger
 ---
 ### What are the prerequisites for application to start?
 
