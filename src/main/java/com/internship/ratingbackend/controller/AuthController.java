@@ -36,7 +36,7 @@ public class AuthController {
      * @return ResponseEntity with authResponse
      */
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<AuthResponse> authorize(@RequestBody @Valid TokenRequest token) {
 
         AuthResponse authResponse = new AuthResponse();
