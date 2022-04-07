@@ -32,12 +32,14 @@ public class RatingService {
     private final AppProperties appProperties;
     private final Slack slack;
 
+
     /**
      * Method that requests two dates and finds ratings between those dates
      * @param fromDate
      * @param toDate
      * @return List of ratings
      */
+
 
     public List<Rating> getRatingByCreatedAtBetween(LocalDateTime fromDate, LocalDateTime toDate) {
 
@@ -96,10 +98,12 @@ public class RatingService {
         return new RatingResponse(rating);
     }
 
+
     /**
      * Method that is scheduled to daily check ratings, and, if the ratings are below 50 it will
      * send a message to slack
      */
+
 
     @Scheduled(cron = "0 59 23 * * *")
     @SneakyThrows
