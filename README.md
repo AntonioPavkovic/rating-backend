@@ -1,8 +1,5 @@
 # Rating-app
 
-## About this project
-
-
 
 ### What is it all about?
 *Rating application is a simple application that is used for simple
