@@ -12,6 +12,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 /**
  * SwaggerConfig class is used for Swagger API setup.
  */
+
 @Configuration
 public class SwaggerConfig {
 
