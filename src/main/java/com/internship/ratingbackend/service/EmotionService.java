@@ -6,10 +6,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 
+/**
+ * Service class for Emotion
+ *
+ * @see Emotion
+ */
+
 @RequiredArgsConstructor
 @Service
 public class EmotionService {
     private final EmotionRepository emotionRepository;
+
+    /**
+     * Method that finds emotion by id
+     *
+     * @see EmotionRepository
+     * @param id
+     * @return emotion
+     */
 
     public Emotion findEmotionById(Integer id)
     {

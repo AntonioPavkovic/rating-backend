@@ -12,11 +12,18 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Service class for Setting
+ *
+ * @see Setting
+ */
+
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Service
 @Slf4j
@@ -26,11 +33,24 @@ public class SettingService {
     private final SettingRepository settingRepository;
     private final Pusher pusher;
 
+    /**
+     * Method that requests id to find setting
+     *
+     * @param id
+     * @return setting
+     */
+
     public Setting getSettingById(Integer id)
     {
         return settingRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Setting with id "+id+" doesn't exist"));
     }
 
+
+    /**
+     * Method that requests Setting request and updates the setting
+     * @see SettingRequest
+     * @param newSetting
+     */
 
     public void updateSetting(SettingRequest newSetting) {
 

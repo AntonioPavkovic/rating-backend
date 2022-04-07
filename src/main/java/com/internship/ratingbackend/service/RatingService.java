@@ -16,6 +16,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for Rating
+ *
+ * @see Rating
+ */
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +31,14 @@ public class RatingService {
     private final Integer ALLOWED_RANGE_DATE_DAYS = 30;
     private final AppProperties appProperties;
     private final Slack slack;
+
+
+    /**
+     * Method that requests two dates and finds ratings between those dates
+     * @param fromDate
+     * @param toDate
+     * @return List of ratings
+     */
 
 
     public List<Rating> getRatingByCreatedAtBetween(LocalDateTime fromDate, LocalDateTime toDate) {
@@ -42,9 +55,23 @@ public class RatingService {
 
     }
 
+    /**
+     * Method that creates a new rating
+     *
+     * @param rating
+     */
+
     public void createRating(Rating rating) {
         ratingRepository.save(rating);
     }
+
+    /**
+     * Method that converts ratings between two dates into a list of rating responses
+     *
+     * @param fromDate
+     * @param toDate
+     * @return list of rating responses
+     */
 
     public List<RatingResponse> buildAll(LocalDateTime fromDate, LocalDateTime toDate)
     {
@@ -59,10 +86,24 @@ public class RatingService {
         return ratingResponses;
     }
 
+    /**
+     * Method that converts single rating into a rating response
+     *
+     * @param rating
+     * @return rating response
+     */
+
     public RatingResponse buildSingle(Rating rating)
     {
         return new RatingResponse(rating);
     }
+
+
+    /**
+     * Method that is scheduled to daily check ratings, and, if the ratings are below 50 it will
+     * send a message to slack
+     */
+
 
     @Scheduled(cron = "0 59 23 * * *")
     @SneakyThrows
@@ -87,7 +128,5 @@ public class RatingService {
             log.info(response.toString());
 
         }
-
-
     }
 }

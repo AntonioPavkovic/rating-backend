@@ -6,16 +6,23 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
+/**
+ * ApiError Exception handler - this class is used to return a custom api_error
+ */
+
 @Getter
 @Setter
 public class ApiError {
     private HttpStatus status;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Europe/Zagreb")
     private LocalDateTime timestamp;
     private String message;
     private String debugMessage;
 
+
+    /**
+     * custom constructors
+     */
     public ApiError() {
         this.timestamp = LocalDateTime.now();
     }

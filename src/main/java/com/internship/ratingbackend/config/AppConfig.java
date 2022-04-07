@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Config class for our API
+ */
 
 @Configuration
 @RequiredArgsConstructor
@@ -14,6 +17,11 @@ public class AppConfig {
 
     private final AppProperties appProperties;
 
+    /**
+     * Method that configures Pusher and returns a singleton pusher bean
+     *
+     * @return pusher
+     */
 
     @Bean
     public Pusher pusherClient() {
@@ -23,6 +31,12 @@ public class AppConfig {
 
         return pusher;
     }
+
+    /**
+     * Method that returns an instance of slack
+     *
+     * @return Slack.getInstance
+     */
 
     @Bean
     public Slack getSlack() {

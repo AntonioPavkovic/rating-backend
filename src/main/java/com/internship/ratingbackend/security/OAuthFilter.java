@@ -13,13 +13,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+
+/**
+ * Filter for OAuth
+ */
 
 @RequiredArgsConstructor
 @Component
@@ -29,6 +32,17 @@ public class OAuthFilter extends OncePerRequestFilter {
 
     private final CustomUserService customUserService;
     private final String BEARER="Bearer ";
+
+    /**
+     * Method that filters all request. If the route is protected, it checks if Google OAuth token is valid
+     *
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     * @throws NullPointerException
+     */
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -73,11 +87,4 @@ public class OAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String extractAuthorizationHeaderAsString(HttpServletRequest request) {
-        try {
-            return request.getHeader("Authorization");
-        } catch (Exception ex){
-            throw new RuntimeException("There is no Authorization header in a request", ex);
-        }
-    }
 }
