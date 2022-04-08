@@ -47,8 +47,8 @@ public class Setting {
      * 'Thank you' message that is presented on the screen after voting
      */
 
-    @Size(min = 3,max = 128,message = "Message length value must be in bounds 3-128 chars")
-    @Column(name = "message", columnDefinition = "VARCHAR(128) default 'Thank you for rating.'")
+    @Size(min = 3,max = 120,message = "Message length value must be in bounds 3-120 chars")
+    @Column(name = "message", columnDefinition = "VARCHAR(128) default 'Thank you for rating!'")
     private String message="Thank you for rating.";
 
     /**

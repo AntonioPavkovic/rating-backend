@@ -84,7 +84,7 @@ There are some validation rules applied to these columns:*
 **Message:**
 
 - **minimum length: 3**
-- **maximum length: 3**
+- **maximum length: 120**
 - **default: Thank you for rating**
 
 **Message timeout:**
