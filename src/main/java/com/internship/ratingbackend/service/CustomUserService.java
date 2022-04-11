@@ -63,16 +63,14 @@ public class CustomUserService implements UserDetailsService {
      */
 
     public JsonObject validateAccessToken(TokenRequest token) throws IOException {
-        URL url = new URL(
-                appProperties.getValidateAccessTokenLink() + token.getToken());
-        HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
+        URL url = new URL(appProperties.getValidateAccessTokenLink() + token.getToken());
+        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+        httpsURLConnection.setRequestMethod("GET");
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        JsonObject json = JsonParser.parseReader(in).getAsJsonObject();
-        in.close();
-        con.disconnect();
+        BufferedReader input = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
+        JsonObject json = JsonParser.parseReader(input).getAsJsonObject();
+        input.close();
+        httpsURLConnection.disconnect();
         return json;
     }
 
@@ -85,18 +83,18 @@ public class CustomUserService implements UserDetailsService {
 
     public void revokeToken(TokenRequest token) throws IOException {
             URL url = new URL(appProperties.getRevokeGoogleAccessToken() + token.getToken());
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Length", "0");
-            con.setRequestProperty("Accept", "*/*");
-            con.setDoOutput(true);
-            con.connect();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Content-Length", "0");
+            httpURLConnection.setRequestProperty("Accept", "*/*");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.connect();
 
-            con.getOutputStream().close();
+            httpURLConnection.getOutputStream().close();
             BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+                    new InputStreamReader(httpURLConnection.getInputStream()));
             in.close();
-            con.disconnect();
+            httpURLConnection.disconnect();
     }
 
 }
