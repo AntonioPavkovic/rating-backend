@@ -1,9 +1,8 @@
 package com.internship.ratingbackend.service;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.internship.ratingbackend.config.AppProperties;
 import com.internship.ratingbackend.dto.auth.TokenRequest;
 import com.internship.ratingbackend.model.CustomUser;
@@ -14,9 +13,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import javax.net.ssl.HttpsURLConnection;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Optional;
 
 /**
@@ -56,21 +59,42 @@ public class CustomUserService implements UserDetailsService {
      *
      * @param token
      * @return token payload
-     * @throws GeneralSecurityException
      * @throws IOException
      */
 
-    public GoogleIdToken.Payload validateToken(TokenRequest token) throws GeneralSecurityException, IOException {
+    public JsonObject validateAccessToken(TokenRequest token) throws IOException {
+        URL url = new URL(appProperties.getValidateAccessTokenLink() + token.getToken());
+        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+        httpsURLConnection.setRequestMethod("GET");
 
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
-                .setAudience(Collections.singletonList(appProperties.getClientId()))
-                .build();
+        BufferedReader input = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
+        JsonObject json = JsonParser.parseReader(input).getAsJsonObject();
+        input.close();
+        httpsURLConnection.disconnect();
+        return json;
+    }
 
-        GoogleIdToken idToken = verifier.verify(token.getToken());
-        if (idToken != null) {
-            return idToken.getPayload();
-        }
-        throw new GeneralSecurityException("Invalid token...");
+    /**
+     *Method revokes passed token, if not valid input, throws IO exception
+     *
+     * @param token
+     * @throws IOException
+     */
+
+    public void revokeToken(TokenRequest token) throws IOException {
+            URL url = new URL(appProperties.getRevokeGoogleAccessToken() + token.getToken());
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Content-Length", "0");
+            httpURLConnection.setRequestProperty("Accept", "*/*");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.connect();
+
+            httpURLConnection.getOutputStream().close();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(httpURLConnection.getInputStream()));
+            in.close();
+            httpURLConnection.disconnect();
     }
 
 }
