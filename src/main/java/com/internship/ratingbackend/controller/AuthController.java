@@ -56,6 +56,13 @@ public class AuthController {
         }
     }
 
+    /**
+     * Api endpoint, method revokes passed token
+     *
+     * @param token
+     * @return Response entity with authResponse
+     */
+
     @PostMapping("revoke")
     public ResponseEntity<AuthResponse> revokeToken(@RequestBody TokenRequest token)
     {

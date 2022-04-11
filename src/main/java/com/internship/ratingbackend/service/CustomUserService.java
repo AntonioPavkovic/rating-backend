@@ -60,7 +60,6 @@ public class CustomUserService implements UserDetailsService {
      *
      * @param token
      * @return token payload
-     * @throws GeneralSecurityException
      * @throws IOException
      */
 
@@ -77,6 +76,13 @@ public class CustomUserService implements UserDetailsService {
         con.disconnect();
         return json;
     }
+
+    /**
+     *Method revokes passed token, if not valid input, throws IO exception
+     *
+     * @param token
+     * @throws IOException
+     */
 
     public void revokeToken(TokenRequest token) throws IOException {
             URL url = new URL(appProperties.getRevokeGoogleAccessToken() + token.getToken());
