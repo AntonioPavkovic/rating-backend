@@ -1,6 +1,6 @@
 package com.internship.ratingbackend.controller;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.gson.JsonObject;
 import com.internship.ratingbackend.dto.auth.AuthResponse;
 import com.internship.ratingbackend.dto.auth.TokenRequest;
 import com.internship.ratingbackend.service.CustomUserService;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
+
 
 /**
  * AuthController - a rest controller with a custom route for user auth
@@ -38,21 +38,40 @@ public class AuthController {
      */
 
     @PostMapping()
-    public ResponseEntity<AuthResponse> authorize(@RequestBody @Valid TokenRequest token) {
+    public ResponseEntity<AuthResponse> authorize(@RequestBody @Valid TokenRequest token)throws IOException {
 
         AuthResponse authResponse = new AuthResponse();
         try {
-            GoogleIdToken.Payload payload = customUserService.validateToken(token);
-            String email = payload.getEmail();
+            JsonObject payload = customUserService.validateAccessToken(token);
+            String email = payload.get("email").getAsString();
             customUserService.loadUserByUsername(email);
             authResponse.setStatus(HttpStatus.ACCEPTED);
             authResponse.setMessage("Successfully authorized!");
 
             return new ResponseEntity<>(authResponse,HttpStatus.ACCEPTED);
-        } catch (GeneralSecurityException | IOException | UsernameNotFoundException e) {
+        } catch (IOException | UsernameNotFoundException e) {
             authResponse.setStatus(HttpStatus.UNAUTHORIZED);
             authResponse.setMessage(e.getMessage());
             return new ResponseEntity<>(authResponse,HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PostMapping("revoke")
+    public ResponseEntity<AuthResponse> revokeToken(@RequestBody TokenRequest token)
+    {
+    AuthResponse authResponse = new AuthResponse();
+        try {
+            customUserService.revokeToken(token);
+            authResponse.setStatus(HttpStatus.ACCEPTED);
+            authResponse.setMessage("Token revoked successfully");
+
+            return new ResponseEntity<>(authResponse,HttpStatus.OK);
+        }catch (IOException e)
+        {
+            authResponse.setStatus(HttpStatus.BAD_REQUEST);
+            authResponse.setMessage("Something went wrong...");
+
+            return new ResponseEntity<>(authResponse,HttpStatus.BAD_REQUEST);
         }
     }
 

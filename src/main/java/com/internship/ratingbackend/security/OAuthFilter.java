@@ -1,6 +1,7 @@
 package com.internship.ratingbackend.security;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+
+import com.google.gson.JsonObject;
 import com.internship.ratingbackend.dto.auth.TokenRequest;
 import com.internship.ratingbackend.service.CustomUserService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
+
 
 /**
  * Filter for OAuth
@@ -31,7 +32,7 @@ import java.security.GeneralSecurityException;
 public class OAuthFilter extends OncePerRequestFilter {
 
     private final CustomUserService customUserService;
-    private final String BEARER="Bearer ";
+    private final static String BEARER="Bearer ";
 
     /**
      * Method that filters all request. If the route is protected, it checks if Google OAuth token is valid
@@ -58,9 +59,9 @@ public class OAuthFilter extends OncePerRequestFilter {
         if (authorizationHeader != null && authorizationHeader.startsWith(BEARER)) {
             tokenRequest.setToken(authorizationHeader.substring(7));
             try {
-                GoogleIdToken.Payload json = customUserService.validateToken(tokenRequest);
-                email = json.getEmail();
-            } catch (RuntimeException | IOException | GeneralSecurityException e) {
+                JsonObject json = customUserService.validateAccessToken(tokenRequest);
+                email = json.get("email").getAsString();
+            } catch (RuntimeException | IOException e) {
                 response.setStatus(401);
             }
         }
