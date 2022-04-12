@@ -54,13 +54,19 @@ public class AppProperties {
     @Value("${app.slack.report}")
     private String slackReportLink;
 
+    /**
+     * @Get validation access token
+     */
+
     @Value("${app.google.oauth.validate}")
     private String validateAccessTokenLink;
+
+    /**
+     * @Get revoke access token
+     */
 
     @Value("${app.google.oauth.revoke}")
     private String revokeGoogleAccessToken;
 
-
-  
 
 }
