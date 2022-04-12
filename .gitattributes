@@ -1,2 +1,3 @@
 #pattern  filter=crypt diff=crypt merge=crypt
-README.md  filter=crypt diff=crypt merge=crypt
+src/main/resources/application.properties  filter=crypt diff=crypt merge=crypt
+

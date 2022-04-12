@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -71,7 +72,12 @@ public class CustomUserService implements UserDetailsService {
         JsonObject json = JsonParser.parseReader(input).getAsJsonObject();
         input.close();
         httpsURLConnection.disconnect();
-        return json;
+
+        String aud = json.get("aud").getAsString();
+        if(Objects.equals(aud, appProperties.getClientId()))
+            return json;
+        else
+            throw new IOException("Invalid token...");
     }
 
     /**
