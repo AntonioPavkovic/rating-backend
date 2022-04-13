@@ -41,7 +41,14 @@ public class SettingService {
 
     public Setting getSettingById(Integer id)
     {
-        return settingRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Setting with id "+id+" doesn't exist"));
+        Optional<Setting> setting = settingRepository.findById(id);
+        if(setting.isPresent())
+        {
+            if(setting.get().getMessage()==null)
+                setting.get().setMessage("");
+            return setting.get();
+        }
+        throw new EntityNotFoundException("No setting with id "+id+" found.");
     }
 
 
