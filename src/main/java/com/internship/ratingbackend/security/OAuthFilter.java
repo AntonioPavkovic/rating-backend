@@ -33,7 +33,7 @@ import java.io.IOException;
 public class OAuthFilter extends OncePerRequestFilter {
 
     private final CustomUserService customUserService;
-    private final static String BEARER = "Bearer ";
+    private static final String BEARER = "Bearer ";
 
     /**
      * Method that filters all request. If the route is protected, it checks if Google OAuth token is valid
@@ -52,8 +52,9 @@ public class OAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException, NullPointerException {
 
+
         if ((request.getRequestURI().contains("api/v1/ratings") && request.getMethod().equals("GET")) ||
-                request.getMethod().contains("api/v1/settings") && request.getMethod().equals("PATCH")) {
+                (request.getRequestURI().contains("api/v1/settings")) && request.getMethod().equals("PATCH")) {
 
             final String authorizationHeader = request.getHeader("Authorization");
 
@@ -87,7 +88,6 @@ public class OAuthFilter extends OncePerRequestFilter {
                 } catch (UsernameNotFoundException e) {
                     log.info("Unable to find a user...");
                 }
-
             }
 
         }
