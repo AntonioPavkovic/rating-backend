@@ -1,15 +1,12 @@
 package com.internship.ratingbackend.service;
 
-import com.internship.ratingbackend.dto.setting.SettingResponse;
 import com.internship.ratingbackend.model.Setting;
 import com.internship.ratingbackend.repository.EmotionSettingRepository;
 import com.internship.ratingbackend.repository.SettingRepository;
 import com.pusher.rest.Pusher;
 import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.List;
-
 import static org.mockito.Mockito.mock;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;

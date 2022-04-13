@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS emotion_setting (
     constraint emotion_id_emotion_setting_constraints_emotion_id_emotion foreign key(emotion_id) references emotion(id)
     )ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-INSERT INTO emotion_setting (emotion_id,emotion_value) VALUES  (5, 3),
+INSERT INTO emotion_setting(emotion_id,emotion_value) VALUES  (5, 3),
                                                                (3, 3),
                                                                (1, 3),
                                                                (5, 4),

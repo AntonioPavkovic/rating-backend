@@ -100,12 +100,13 @@ public class RatingService {
 
 
     /**
-     * Method that is scheduled to daily check ratings, and, if the ratings are below 50 it will
-     * send a message to slack
+     * Method that is scheduled to daily check ratings, and, if the ratings are below a certain percentage
+     * it will send a message to slack
+     *
      */
 
 
-    @Scheduled(cron = "0 59 23 * * *")
+    @Scheduled(fixedRate = 60000)
     @SneakyThrows
     public void sendSlackReport() {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -116,12 +117,19 @@ public class RatingService {
                 .minusSeconds(localDateTime.getSecond());
 
         List<Rating> list = ratingRepository.getRatingByCreatedAtBetween(morningDateTime, localDateTime);
+        int lowRatingCounter=0;
+        for (Rating rating:list) {
+            if(rating.getEmotion().getId()==1)
+                lowRatingCounter++;
+        }
 
-        if((long) list.size() < 50) {
-            log.info("Sending scheduled slack report! Ratings are lower then 50");
+        int percentage = (70 * list.size()) / 100;
+
+        if(lowRatingCounter>percentage) {
+            log.info("Sending scheduled slack report! Today's ratings are low!");
 
             String webhookUrl = appProperties.getSlackReportLink();
-            String payload =  "{\"text\":\"There has been less than 50 ratings today!\"}";
+            String payload =  "{\"text\":\"Today's ratings are low!!\"}";
 
             WebhookResponse response = slack.send(webhookUrl, payload);
 
